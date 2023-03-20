@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mentasia/constants/global_variables.dart';
 import 'package:mentasia/screens/home.dart';
 import 'package:mentasia/screens/chat/chat_screen.dart';
-import 'package:mentasia/screens/auth_screen/login_screen.dart';
+import 'package:mentasia/screens/auth-screen/login_screen.dart';
 import 'package:mentasia/utils/submit_card.dart';
 
 import '../controllers/auth.dart';

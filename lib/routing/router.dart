@@ -3,8 +3,8 @@ import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:mentasia/models/message_data.dart';
 import 'package:mentasia/screens/chat-screen/conversation_screen.dart';
 import 'package:mentasia/screens/home.dart';
-import 'package:mentasia/screens/auth_screen/login_screen.dart';
-import 'package:mentasia/screens/auth_screen/signup_screen.dart';
+import 'package:mentasia/screens/auth-screen/login_screen.dart';
+import 'package:mentasia/screens/auth-screen/signup_screen.dart';
 import 'package:mentasia/screens/settings/personal_account_screen.dart';
 import 'package:mentasia/screens/settings/terms_of_service_screen.dart';
 import 'package:mentasia/screens/chat/settings_screen.dart';
@@ -14,7 +14,7 @@ import 'package:mentasia/screens/settings/mentasia_works_screen.dart';
 import 'package:mentasia/screens/hello_screen.dart';
 import 'package:mentasia/screens/splash_screen.dart';
 
-import '../screens/auth_screen/wrapper.dart';
+import '../screens/auth-screen/wrapper.dart';
 
 getRoutes() {
   return {

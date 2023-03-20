@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final ValueNotifier<int> pageIndex = ValueNotifier(0);
+  final ValueNotifier<String> title = ValueNotifier("Messages");
 
   int index = 0;
   final screens = [
@@ -29,6 +29,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text("Messages"),
+        centerTitle: true,
         leading: Container(),
       ),
       bottomNavigationBar: NavigationBarTheme(

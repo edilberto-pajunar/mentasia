@@ -6,7 +6,6 @@ import 'package:mentasia/screens/chat-screen/conversation_screen.dart';
 import 'package:mentasia/utils/avatar.dart';
 
 import '../../models/message_data.dart';
-import '../../models/story_data.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});

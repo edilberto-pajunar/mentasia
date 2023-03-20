@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mentasia/constants/global_variables.dart';
-import 'package:mentasia/screens/auth_screen/signup_screen.dart';
+import 'package:mentasia/screens/auth-screen/signup_screen.dart';
 import 'package:mentasia/screens/home.dart';
 import 'package:mentasia/utils/reusable_form.dart';
 import 'package:mentasia/utils/submit_card.dart';

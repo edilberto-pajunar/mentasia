@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mentasia/constants/global_variables.dart';
-import 'package:mentasia/screens/auth_screen/login_screen.dart';
+import 'package:mentasia/screens/auth-screen/login_screen.dart';
 import 'package:mentasia/screens/home.dart';
 import 'package:mentasia/utils/reusable_form.dart';
 import 'package:mentasia/utils/submit_card.dart';
