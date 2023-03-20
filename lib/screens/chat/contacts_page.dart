@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mentasia/controllers/auth.dart';
-import 'package:mentasia/screens/wrapper/home_screen.dart';
+import 'package:mentasia/screens/hello_screen.dart';
 
-class ContactsPage extends StatefulWidget {
-  const ContactsPage({super.key});
+class ContactsScreen extends StatefulWidget {
+  const ContactsScreen({super.key});
 
   @override
-  State<ContactsPage> createState() => _ContactsPageState();
+  State<ContactsScreen> createState() => _ContactsScreenState();
 }
 
-class _ContactsPageState extends State<ContactsPage> {
+class _ContactsScreenState extends State<ContactsScreen> {
   void logout() async {
     await Auth().logout();
-    Navigator.pushNamed(context, HomeScreen.route);
+    Navigator.pushNamed(context, HelloScreen.route);
   }
 
   @override

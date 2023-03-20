@@ -1,3 +1,16 @@
+import 'dart:ui';
+
+// List of Colors
+const tPrimaryColor = Color(0xFF429191);
+const tDarkColor = Color(0xFF194545);
+const tSecondaryColor = Color(0xFFbfd9d8);
+const tWhiteColor = Color(0xffffffff);
+const tBrownColor = Color(0xFFb69789);
+const tBlackColor = Color(0xFF000000);
+const tBgColor = Color(0xFFDDDDDD);
+
+// List of Image
+
 // App Image String
 
 // Splash Screen
@@ -35,3 +48,4 @@ const String tEllipseBg = "assets/images/ellipse_bg.png";
 const String tGmail = "assets/logo/gmail-logo.png";
 const String tChat = "assets/logo/chat-logo.png";
 const String tMind = "assets/logo/mind-logo.png";
+

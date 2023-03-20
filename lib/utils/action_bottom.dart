@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../glowing_action_button.dart';
+import 'glowing_action_button.dart';
 
 class ActionBar extends StatelessWidget {
   final VoidCallback onPressed;

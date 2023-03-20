@@ -2,31 +2,28 @@ import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mentasia/main.dart';
-import 'package:mentasia/models/models.dart';
 import 'package:mentasia/screens/chat-screen/message_screen.dart';
 import 'package:mentasia/utils/avatar.dart';
 import 'package:mentasia/utils/glowing_action_button.dart';
 import 'package:mentasia/utils/icon_buttons.dart';
 
 import '../../models/message_data.dart';
-import '../../utils/chat_util/action_bottom.dart';
+import '../../utils/action_bottom.dart';
 
-class ChatScreen extends StatefulWidget {
-  static Route route(MessageData data) => MaterialPageRoute(
-        builder: (context) => ChatScreen(messageData: data),
-      );
+class ConversationScreen extends StatefulWidget {
+  static String route = "ConversationScreen";
+  var messageData;
 
-  final MessageData messageData;
-  ChatScreen({
+  ConversationScreen({
     super.key,
-    required this.messageData,
+    this.messageData,
   });
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<ConversationScreen> createState() => _ConversationScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ConversationScreenState extends State<ConversationScreen> {
   late DialogFlowtter dialogFlowtter;
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
@@ -46,65 +43,38 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: Theme.of(context).iconTheme,
-        centerTitle: false,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leadingWidth: 54,
-        leading: Align(
-          alignment: Alignment.centerRight,
-          child: IconBackground(
-            icon: CupertinoIcons.back,
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
         title: _AppBarTitle(
           messageData: widget.messageData,
         ),
-        actions: [
+        actions: const [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Center(
-              child: IconBorder(
-                icon: CupertinoIcons.video_camera_solid,
-                onTap: () {},
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Center(
-              child: IconBorder(
-                icon: CupertinoIcons.phone_solid,
-                onTap: () {},
-              ),
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
+            child: Icon(
+              CupertinoIcons.info,
             ),
           ),
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Expanded(
-              child: MessagesScreen(
-                scrollController: _scrollController,
-                messages: messages,
-              ),
+      body: Column(
+        children: [
+          Expanded(
+            child: MessagesScreen(
+              scrollController: _scrollController,
+              messages: messages,
             ),
-            ActionBar(
-              onPressed: () {
-                sendMessage(_controller.text);
-                _controller.clear();
-                _scrollController.animateTo(
-                    _scrollController.position.maxScrollExtent,
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeOut);
-              },
-              messageController: _controller,
-            ),
-          ],
-        ),
+          ),
+          ActionBar(
+            onPressed: () {
+              sendMessage(_controller.text);
+              _controller.clear();
+              _scrollController.animateTo(
+                  _scrollController.position.maxScrollExtent,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeOut);
+            },
+            messageController: _controller,
+          ),
+        ],
       ),
     );
   }

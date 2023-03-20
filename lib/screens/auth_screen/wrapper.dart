@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mentasia/screens/chat/chat_main.dart';
-import 'package:mentasia/screens/wrapper/home_screen.dart';
+import 'package:mentasia/screens/home.dart';
+import 'package:mentasia/screens/hello_screen.dart';
 
 class Wrapper extends StatelessWidget {
   static String route = "wrapper";
@@ -14,7 +14,7 @@ class Wrapper extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.hasData) {
-              return ChatMain();
+              return Home();
             } else if (snapshot.hasError) {
               return Center(
                 child: Text("${snapshot.hasError}"),
@@ -26,7 +26,7 @@ class Wrapper extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          return HomeScreen();
+          return HelloScreen();
         });
   }
 }

@@ -2,24 +2,23 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mentasia/constants/colors.dart';
-import 'package:mentasia/screens/chat/chat_main.dart';
-import 'package:mentasia/screens/chat/chat_page.dart';
+import 'package:mentasia/constants/global_variables.dart';
+import 'package:mentasia/screens/home.dart';
+import 'package:mentasia/screens/chat/chat_screen.dart';
 import 'package:mentasia/screens/auth_screen/login_screen.dart';
-import 'package:mentasia/utils/forms_util/submit_card.dart';
+import 'package:mentasia/utils/submit_card.dart';
 
-import '../../constants/image_strings.dart';
-import '../../controllers/auth.dart';
+import '../controllers/auth.dart';
 
-class HomeScreen extends StatelessWidget {
-  static String route = "homeScreen";
+class HelloScreen extends StatelessWidget {
+  static String route = "HelloScreen";
 
-  const HomeScreen({super.key});
+  const HelloScreen({super.key});
 
   void signinGuest(context) async {
     await Auth().signInAnonymously();
 
-    Navigator.pushNamed(context, ChatMain.route);
+    Navigator.pushNamed(context, Home.route);
   }
 
   @override

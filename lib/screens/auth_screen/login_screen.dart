@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mentasia/constants/colors.dart';
-import 'package:mentasia/constants/image_strings.dart';
+import 'package:mentasia/constants/global_variables.dart';
 import 'package:mentasia/screens/auth_screen/signup_screen.dart';
-import 'package:mentasia/screens/chat/chat_main.dart';
-import 'package:mentasia/utils/forms_util/reusable_form.dart';
-import 'package:mentasia/utils/forms_util/submit_card.dart';
+import 'package:mentasia/screens/home.dart';
+import 'package:mentasia/utils/reusable_form.dart';
+import 'package:mentasia/utils/submit_card.dart';
 
 import '../../controllers/auth.dart';
 
@@ -24,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     await Auth().loginUser(
         _emailController.text.trim(), _passwordController.text.trim());
 
-    Navigator.pushNamed(context, ChatMain.route);
+    Navigator.pushNamed(context, Home.route);
   }
 
   @override
