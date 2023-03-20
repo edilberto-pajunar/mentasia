@@ -5,7 +5,6 @@ import 'package:mentasia/screens/chat-screen/message_screen.dart';
 import 'package:mentasia/utils/avatar.dart';
 
 import '../../models/message_data.dart';
-import '../../utils/action_bottom.dart';
 
 class ConversationScreen extends StatefulWidget {
   static String route = "ConversationScreen";
@@ -38,20 +37,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: Theme.of(context).iconTheme,
-        title: _AppBarTitle(
-          messageData: widget.messageData,
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
-            child: Icon(
-              CupertinoIcons.info,
-            ),
-          ),
-        ],
-      ),
+      appBar: AppBar(),
       body: Column(
         children: [
           Expanded(
@@ -106,46 +92,70 @@ class _ConversationScreenState extends State<ConversationScreen> {
   }
 }
 
-class _AppBarTitle extends StatelessWidget {
-  final MessageData messageData;
-  const _AppBarTitle({
-    super.key,
-    required this.messageData,
-  });
+class ActionBar extends StatelessWidget {
+  final VoidCallback onPressed;
+  final TextEditingController messageController;
+
+  const ActionBar(
+      {super.key, required this.onPressed, required this.messageController});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Avatar.small(url: messageData.profilePicture),
-        SizedBox(
-          width: 16,
-        ),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                messageData.senderName,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 14, color: Colors.black87),
-              ),
-              SizedBox(
-                height: 2,
-              ),
-              Text(
-                "Online now",
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green,
+    return SafeArea(
+      bottom: true,
+      top: false,
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border(
+                right: BorderSide(
+                  width: 2,
+                  color: Colors.grey,
                 ),
               ),
-            ],
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Icon(
+                CupertinoIcons.add_circled_solid,
+              ),
+            ),
           ),
-        ),
-      ],
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: 16.0),
+              child: TextField(
+                controller: messageController,
+                decoration: InputDecoration(
+                  hintText: "Type something...",
+                  border: InputBorder.none,
+                ),
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 12.0, right: 24.0),
+            // child: GlowingActionButton(
+            //   color: Colors.greenAccent,
+            //   icon: Icons.send_rounded,
+            //   onPressed: onPressed,
+            // ),
+            child: GestureDetector(
+              onTap: onPressed,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.send),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

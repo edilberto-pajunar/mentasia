@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mentasia/constants/global_variables.dart';
+import 'package:mentasia/models/model_theme.dart';
 import 'package:mentasia/screens/chat/contacts_page.dart';
 import 'package:mentasia/screens/chat/settings_screen.dart';
+import 'package:provider/provider.dart';
+import '../main.dart';
 import 'chat/chat_screen.dart';
 
 class Home extends StatefulWidget {
@@ -16,6 +19,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final ValueNotifier<String> title = ValueNotifier("Messages");
 
+  IconData _iconLight = Icons.wb_sunny;
+  IconData _iconDark = Icons.nights_stay;
+
   int index = 0;
   final screens = [
     ChatScreen(),
@@ -27,38 +33,52 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Messages"),
-        centerTitle: true,
-        leading: Container(),
-      ),
-      bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
-            height: 60,
-            indicatorColor: tPrimaryColor,
-            labelTextStyle: MaterialStateProperty.all(
-              TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
+    return Consumer<ModelTheme>(
+      builder: ((context, value, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("Messages"),
+            centerTitle: true,
+            leading: Container(),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: IconButton(
+                    onPressed: () {
+                      value.isDark ? value.isDark = false : value.isDark = true;
+                    },
+                    icon: Icon(value.isDark ? _iconDark : _iconLight)),
               ),
-            )),
-        child: NavigationBar(
-          selectedIndex: index,
-          onDestinationSelected: (index) => setState(() {
-            this.index = index;
-          }),
-          destinations: const [
-            NavigationDestination(
-                icon: Icon(CupertinoIcons.chat_bubble), label: "Chat"),
-            NavigationDestination(
-                icon: Icon(CupertinoIcons.search), label: "Search"),
-            NavigationDestination(
-                icon: Icon(CupertinoIcons.person), label: "Profile"),
-          ],
-        ),
-      ),
-      body: SafeArea(child: screens[index]),
+            ],
+          ),
+          bottomNavigationBar: NavigationBarTheme(
+            data: NavigationBarThemeData(
+                height: 50,
+                indicatorColor: Theme.of(context).primaryColor,
+                labelTextStyle: MaterialStateProperty.all(
+                  TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )),
+            child: NavigationBar(
+              selectedIndex: index,
+              onDestinationSelected: (index) => setState(() {
+                this.index = index;
+              }),
+              destinations: const [
+                NavigationDestination(
+                    icon: Icon(CupertinoIcons.chat_bubble), label: "Chat"),
+                NavigationDestination(
+                    icon: Icon(CupertinoIcons.search), label: "Search"),
+                NavigationDestination(
+                    icon: Icon(CupertinoIcons.person), label: "Profile"),
+              ],
+            ),
+          ),
+          body: SafeArea(child: screens[index]),
+        );
+      }),
     );
   }
 }

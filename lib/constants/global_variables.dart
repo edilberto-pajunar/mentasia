@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 // List of Colors
 const tPrimaryColor = Color(0xFF429191);
 const tDarkColor = Color(0xFF194545);
@@ -49,3 +51,20 @@ const String tGmail = "assets/logo/gmail-logo.png";
 const String tChat = "assets/logo/chat-logo.png";
 const String tMind = "assets/logo/mind-logo.png";
 
+ThemeData lighTheme = ThemeData(
+  primaryColor: tPrimaryColor,
+  brightness: Brightness.light,
+  appBarTheme: AppBarTheme(
+    backgroundColor: tPrimaryColor,
+    elevation: 0,
+  ),
+);
+
+ThemeData darkTheme = ThemeData(
+  primaryColor: tDarkColor,
+  brightness: Brightness.dark,
+  appBarTheme: AppBarTheme(
+    backgroundColor: tBlackColor,
+    elevation: 0,
+  ),
+);
