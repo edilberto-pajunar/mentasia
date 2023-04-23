@@ -1,8 +1,11 @@
 import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mentasia/screens/chat-screen/message_screen.dart';
-import 'package:mentasia/utils/avatar.dart';
+import 'package:mentasia/models/model_theme.dart';
+import 'package:mentasia/views/chat-screen/message_screen.dart';
+import 'package:mentasia/widgets/avatar.dart';
+import 'package:mentasia/widgets/drawer_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/message_data.dart';
 
@@ -23,6 +26,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
   late DialogFlowtter dialogFlowtter;
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  IconData _iconLight = Icons.wb_sunny;
+  IconData _iconDark = Icons.nights_stay;
 
   @override
   void initState() {
@@ -37,7 +42,25 @@ class _ConversationScreenState extends State<ConversationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Consumer<ModelTheme>(
+              builder: (context, value, child) {
+                return IconButton(
+                    onPressed: () {
+                      value.isDark ? value.isDark = false : value.isDark = true;
+                    },
+                    icon: Icon(value.isDark ? _iconDark : _iconLight));
+              },
+            ),
+          ),
+        ],
+      ),
+      drawer: Drawer(
+        child: DrawerWidget(),
+      ),
       body: Column(
         children: [
           Expanded(

@@ -9,7 +9,7 @@ const tSecondaryColor = Color(0xFFbfd9d8);
 const tWhiteColor = Color(0xffffffff);
 const tBrownColor = Color(0xFFb69789);
 const tBlackColor = Color(0xFF000000);
-const tBgColor = Color(0xFFDDDDDD);
+const tBgColor = Color(0xFFBFD9D8);
 
 // List of Image
 
@@ -50,21 +50,3 @@ const String tEllipseBg = "assets/images/ellipse_bg.png";
 const String tGmail = "assets/logo/gmail-logo.png";
 const String tChat = "assets/logo/chat-logo.png";
 const String tMind = "assets/logo/mind-logo.png";
-
-ThemeData lighTheme = ThemeData(
-  primaryColor: tPrimaryColor,
-  brightness: Brightness.light,
-  appBarTheme: AppBarTheme(
-    backgroundColor: tPrimaryColor,
-    elevation: 0,
-  ),
-);
-
-ThemeData darkTheme = ThemeData(
-  primaryColor: tDarkColor,
-  brightness: Brightness.dark,
-  appBarTheme: AppBarTheme(
-    backgroundColor: tBlackColor,
-    elevation: 0,
-  ),
-);

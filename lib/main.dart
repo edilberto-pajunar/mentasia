@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:mentasia/constants/global_variables.dart';
 import 'package:mentasia/firebase_options.dart';
 import 'package:mentasia/models/model_theme.dart';
-import 'package:mentasia/routing/router.dart';
-import 'package:mentasia/screens/home.dart';
-import 'package:mentasia/screens/splash_screen.dart';
+import 'package:mentasia/constants/router.dart';
+import 'package:mentasia/views/home.dart';
+import 'package:mentasia/views/splash_screen.dart';
 import 'package:provider/provider.dart';
+
+import 'constants/themes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

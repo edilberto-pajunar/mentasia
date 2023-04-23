@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mentasia/controllers/auth.dart';
-import 'package:mentasia/screens/hello_screen.dart';
+import 'package:mentasia/views/hello_screen.dart';
 
 class ContactsScreen extends StatefulWidget {
   const ContactsScreen({super.key});

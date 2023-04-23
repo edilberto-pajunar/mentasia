@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mentasia/constants/global_variables.dart';
 import 'package:mentasia/controllers/auth.dart';
-import 'package:mentasia/screens/settings/personal_account_screen.dart';
-import 'package:mentasia/screens/settings/terms_of_service_screen.dart';
-import 'package:mentasia/screens/settings/about_us_screen.dart';
-import 'package:mentasia/screens/settings/help_feedback_screen.dart';
-import 'package:mentasia/screens/settings/mentasia_works_screen.dart';
-import 'package:mentasia/utils/submit_card.dart';
+import 'package:mentasia/views/settings/personal_account_screen.dart';
+import 'package:mentasia/views/settings/terms_of_service_screen.dart';
+import 'package:mentasia/views/settings/about_us_screen.dart';
+import 'package:mentasia/views/settings/help_feedback_screen.dart';
+import 'package:mentasia/views/settings/mentasia_works_screen.dart';
+import 'package:mentasia/widgets/submit_card.dart';
 
 import '../hello_screen.dart';
 
@@ -202,21 +202,20 @@ class SettingsButton extends StatelessWidget {
             ],
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
                 child: Image(
                   image: AssetImage(imageString),
+                  width: 20,
                 ),
-              ),
-              const SizedBox(
-                width: 10,
               ),
               Text(
                 textLabel,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 16,
+                  fontSize: 13,
                 ),
               ),
             ],

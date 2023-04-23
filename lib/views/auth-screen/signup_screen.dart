@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mentasia/constants/global_variables.dart';
-import 'package:mentasia/screens/auth-screen/login_screen.dart';
-import 'package:mentasia/screens/home.dart';
-import 'package:mentasia/utils/reusable_form.dart';
-import 'package:mentasia/utils/submit_card.dart';
+import 'package:mentasia/views/auth-screen/login_screen.dart';
+import 'package:mentasia/views/chat-screen/conversation_screen.dart';
+import 'package:mentasia/views/home.dart';
+import 'package:mentasia/widgets/reusable_form.dart';
+import 'package:mentasia/widgets/submit_card.dart';
 
 import '../../controllers/auth.dart';
 
@@ -17,9 +18,10 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  bool showPass = false;
 
   RegExp regExp = new RegExp(
     r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
@@ -49,7 +51,6 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFF429191),
         body: Form(
           key: _key,
           child: Padding(
@@ -78,7 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   validator: validatePassword,
                   labelText: "Password",
                   controller: _passwordController,
-                  obscureText: true,
+                  isPass: true,
                 ),
                 SizedBox(
                   height: 20,
@@ -93,7 +94,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           _passwordController.text,
                           context,
                         );
-                        Navigator.pushNamed(context, Home.route);
+                        Navigator.pushNamed(context, ConversationScreen.route);
                       }
                     }),
                 SizedBox(
@@ -103,10 +104,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already have an acount?",
-                      style: TextStyle(
-                        color: tWhiteColor,
-                      ),
+                      "Already have an account?",
                     ),
                     TextButton(
                       onPressed: () =>
@@ -114,7 +112,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: Text(
                         "Log in",
                         style: TextStyle(
-                          color: tBlackColor,
+                          color: Colors.blue,
                         ),
                       ),
                     ),

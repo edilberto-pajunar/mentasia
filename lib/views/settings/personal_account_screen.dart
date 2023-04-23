@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mentasia/constants/global_variables.dart';
-import 'package:mentasia/screens/chat/settings_screen.dart';
-import 'package:mentasia/utils/reusable_form.dart';
-import 'package:mentasia/utils/submit_card.dart';
+import 'package:mentasia/widgets/reusable_form.dart';
+import 'package:mentasia/widgets/submit_card.dart';
 
 class PersonalAccountScreen extends StatefulWidget {
   static String route = "personalScreen";
