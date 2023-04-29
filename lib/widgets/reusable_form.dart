@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mentasia/constants/global_variables.dart';
+import 'package:mentasia/features/core/config/global_variables.dart';
 
 class ReusableForm extends StatefulWidget {
   final String labelText;

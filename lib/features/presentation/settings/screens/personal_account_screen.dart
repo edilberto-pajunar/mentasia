@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mentasia/constants/global_variables.dart';
+import 'package:mentasia/features/core/config/global_variables.dart';
 import 'package:mentasia/widgets/reusable_form.dart';
 import 'package:mentasia/widgets/submit_card.dart';
 

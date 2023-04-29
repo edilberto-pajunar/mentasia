@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mentasia/constants/global_variables.dart';
+import 'package:mentasia/features/core/config/global_variables.dart';
 import 'hello_screen.dart';
-import 'auth-screen/wrapper.dart';
+import '../../../../views/auth-screen/wrapper.dart';
 
 class SplashScreen extends StatefulWidget {
   static String route = "/";

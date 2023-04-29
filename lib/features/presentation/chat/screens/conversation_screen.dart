@@ -1,13 +1,12 @@
 import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mentasia/models/model_theme.dart';
-import 'package:mentasia/views/chat-screen/message_screen.dart';
-import 'package:mentasia/widgets/avatar.dart';
-import 'package:mentasia/widgets/drawer_widget.dart';
+import 'package:mentasia/features/data/models/model_theme.dart';
+import 'package:mentasia/features/presentation/chat/screens/message_screen.dart';
+import 'package:mentasia/features/presentation/settings/widgets/drawer_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/message_data.dart';
+import '../../../data/models/message_data.dart';
 
 class ConversationScreen extends StatefulWidget {
   static String route = "ConversationScreen";

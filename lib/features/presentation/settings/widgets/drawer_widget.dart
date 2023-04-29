@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mentasia/views/settings/help_feedback_screen.dart';
+import 'package:mentasia/features/presentation/settings/screens/help_feedback_screen.dart';
 import 'package:mentasia/widgets/submit_card.dart';
 
-import '../constants/global_variables.dart';
-import '../controllers/auth.dart';
-import '../views/hello_screen.dart';
-import '../views/settings/about_us_screen.dart';
-import '../views/settings/mentasia_works_screen.dart';
-import '../views/settings/personal_account_screen.dart';
-import '../views/settings/terms_of_service_screen.dart';
+import '../../../core/config/global_variables.dart';
+import '../../../data/services/auth.dart';
+import '../../splash/screens/hello_screen.dart';
+import '../screens/about_us_screen.dart';
+import '../screens/mentasia_works_screen.dart';
+import '../screens/personal_account_screen.dart';
+import '../screens/terms_of_service_screen.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});

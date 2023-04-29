@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mentasia/shared/theme_preferences.dart';
+import 'package:mentasia/features/core/shared/theme_preferences.dart';
 
 class ModelTheme extends ChangeNotifier {
   late bool _isDark;

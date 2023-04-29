@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../constants/global_variables.dart';
+import '../../../core/config/global_variables.dart';
 
 
 class AboutUsScreen extends StatefulWidget {

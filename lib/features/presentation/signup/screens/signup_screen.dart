@@ -1,31 +1,49 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mentasia/constants/global_variables.dart';
-import 'package:mentasia/views/auth-screen/signup_screen.dart';
-import 'package:mentasia/views/chat-screen/conversation_screen.dart';
-import 'package:mentasia/views/home.dart';
+import 'package:mentasia/features/core/config/global_variables.dart';
+import 'package:mentasia/features/presentation/login/screens/login_screen.dart';
+import 'package:mentasia/features/presentation/chat/screens/conversation_screen.dart';
 import 'package:mentasia/widgets/reusable_form.dart';
 import 'package:mentasia/widgets/submit_card.dart';
 
-import '../../controllers/auth.dart';
+import '../../../data/services/auth.dart';
 
-class LoginScreen extends StatefulWidget {
-  static String route = "loginScreen";
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  static String route = "signupScreen";
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  bool showPass = false;
 
-  void loginUser() async {
-    await Auth().loginUser(
-        _emailController.text.trim(), _passwordController.text.trim());
+  RegExp regExp = new RegExp(
+    r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
+    caseSensitive: false,
+    multiLine: false,
+  );
 
-    Navigator.pushNamed(context, Home.route);
+  String? validateEmail(String? formEmail) {
+    if (formEmail == null || formEmail.isEmpty) {
+      return "Email address is required";
+    } else if (!regExp.hasMatch(formEmail)) {
+      return "Please follow format: {email@gmail.com}";
+    }
+    return null;
+  }
+
+  String? validatePassword(String? formPassword) {
+    if (formPassword == null || formPassword.isEmpty) {
+      return "Password is required";
+    } else if (formPassword.length < 6) {
+      return "Password is short";
+    }
+    return null;
   }
 
   @override
@@ -39,61 +57,59 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(
-                  width: 120,
-                  image: AssetImage(tSplashIcon),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.0),
-                  child: Text(
-                    "Welcome back!",
-                    style: TextStyle(
-                      color: tBlackColor,
-                      fontSize: 25,
-                    ),
+                Text(
+                  "Hi! Let us set you an account",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
+                SizedBox(height: 20),
                 ReusableForm(
+                  validator: validateEmail,
                   labelText: "Email",
                   controller: _emailController,
+                  obscureText: false,
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 ReusableForm(
+                  validator: validatePassword,
                   labelText: "Password",
                   controller: _passwordController,
                   isPass: true,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 SubmitCard(
                     colorButton: Color(0xFF194545),
-                    buttonText: "Login",
+                    buttonText: "Sign Up",
                     onTap: () async {
                       if (_key.currentState!.validate()) {
-                        await Auth().loginUser(
+                        await Auth().createAccount(
                           _emailController.text,
                           _passwordController.text,
+                          context,
                         );
                         Navigator.pushNamed(context, ConversationScreen.route);
                       }
                     }),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account?",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
+                      "Already have an account?",
                     ),
                     TextButton(
                       onPressed: () =>
-                          Navigator.pushNamed(context, SignupScreen.route),
+                          Navigator.pushNamed(context, LoginScreen.route),
                       child: Text(
-                        "Sign up",
+                        "Log in",
                         style: TextStyle(
                           color: Colors.blue,
                         ),

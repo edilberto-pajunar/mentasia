@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mentasia/constants/global_variables.dart';
+import 'package:mentasia/features/core/config/global_variables.dart';
 
 class MessagesScreen extends StatefulWidget {
   final List messages;
