@@ -1,9 +1,9 @@
 import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mentasia/features/data/models/model_theme.dart';
+import 'package:mentasia/features/data/provider/model_theme.dart';
 import 'package:mentasia/features/presentation/chat/screens/message_screen.dart';
-import 'package:mentasia/features/presentation/settings/widgets/drawer_widget.dart';
+import 'package:mentasia/features/presentation/drawer/widgets/drawer_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/message_data.dart';

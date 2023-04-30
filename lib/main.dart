@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mentasia/features/core/config/global_variables.dart';
+import 'package:mentasia/features/data/provider/profile_picture.dart';
 import 'package:mentasia/firebase_options.dart';
-import 'package:mentasia/features/data/models/model_theme.dart';
+import 'package:mentasia/features/data/provider/model_theme.dart';
 import 'package:mentasia/features/routes/router.dart';
 import 'package:mentasia/features/presentation/splash/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -27,8 +28,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: ((context) => ModelTheme()),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ModelTheme(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProfilePicture(),
+        ),
+      ],
       child: Consumer<ModelTheme>(
         builder: ((context, value, child) {
           return MaterialApp(

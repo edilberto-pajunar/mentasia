@@ -1,15 +1,15 @@
 import 'package:mentasia/features/presentation/chat/screens/conversation_screen.dart';
 import 'package:mentasia/features/presentation/login/screens/login_screen.dart';
 import 'package:mentasia/features/presentation/signup/screens/signup_screen.dart';
-import 'package:mentasia/features/presentation/settings/screens/personal_account_screen.dart';
-import 'package:mentasia/features/presentation/settings/screens/terms_of_service_screen.dart';
-import 'package:mentasia/features/presentation/settings/screens/about_us_screen.dart';
-import 'package:mentasia/features/presentation/settings/screens/help_feedback_screen.dart';
-import 'package:mentasia/features/presentation/settings/screens/mentasia_works_screen.dart';
+import 'package:mentasia/features/presentation/drawer/screens/personal_account_screen.dart';
+import 'package:mentasia/features/presentation/drawer/screens/terms_of_service_screen.dart';
+import 'package:mentasia/features/presentation/drawer/screens/about_us_screen.dart';
+import 'package:mentasia/features/presentation/drawer/screens/help_feedback_screen.dart';
+import 'package:mentasia/features/presentation/drawer/screens/mentasia_works_screen.dart';
 import 'package:mentasia/features/presentation/splash/screens/hello_screen.dart';
 import 'package:mentasia/features/presentation/splash/screens/splash_screen.dart';
 
-import '../../views/auth-screen/wrapper.dart';
+import '../presentation/splash/screens/wrapper.dart';
 
 getRoutes() {
   return {
