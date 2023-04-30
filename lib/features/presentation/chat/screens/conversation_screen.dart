@@ -1,20 +1,19 @@
 import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mentasia/features/core/config/global_variables.dart';
 import 'package:mentasia/features/data/provider/model_theme.dart';
-import 'package:mentasia/features/presentation/chat/screens/message_screen.dart';
 import 'package:mentasia/features/presentation/drawer/widgets/drawer_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../../../data/models/message_data.dart';
+import '../widgets/message_widget.dart';
 
 class ConversationScreen extends StatefulWidget {
   static String route = "ConversationScreen";
-  var messageData;
 
   ConversationScreen({
     super.key,
-    this.messageData,
   });
 
   @override
@@ -22,6 +21,8 @@ class ConversationScreen extends StatefulWidget {
 }
 
 class _ConversationScreenState extends State<ConversationScreen> {
+  bool isLoading = false;
+
   late DialogFlowtter dialogFlowtter;
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
@@ -35,6 +36,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
     super.initState();
   }
+
+  void response(query) async {}
 
   List<Map<String, dynamic>> messages = [];
 
@@ -62,20 +65,31 @@ class _ConversationScreenState extends State<ConversationScreen> {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: MessagesScreen(
+          Flexible(
+            child: MessageWidget(
               scrollController: _scrollController,
               messages: messages,
             ),
           ),
+          isLoading
+              ? SpinKitChasingDots(
+                  color: tPrimaryColor,
+                  size: 15,
+                )
+              : SizedBox.shrink(),
           ActionBar(
             onPressed: () {
               sendMessage(_controller.text);
               _controller.clear();
+              setState(() {
+                isLoading = false;
+              });
+
               _scrollController.animateTo(
-                  _scrollController.position.maxScrollExtent,
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeOut);
+                _scrollController.position.maxScrollExtent,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeOut,
+              );
             },
             messageController: _controller,
           ),
@@ -89,16 +103,27 @@ class _ConversationScreenState extends State<ConversationScreen> {
       print("Message is Empty");
     } else {
       setState(() {
+        isLoading = true;
+      });
+      setState(() {
         addMessage(
-          Message(text: DialogText(text: [text])),
+          Message(
+            text: DialogText(
+              text: [text],
+            ),
+          ),
           true,
         );
       });
 
       DetectIntentResponse response = await dialogFlowtter.detectIntent(
-          queryInput: QueryInput(
-        text: TextInput(text: text),
-      ));
+        queryInput: QueryInput(
+          text: TextInput(
+            text: text,
+            languageCode: "en",
+          ),
+        ),
+      );
       if (response.message == null) return;
       setState(() {
         addMessage(response.message!);

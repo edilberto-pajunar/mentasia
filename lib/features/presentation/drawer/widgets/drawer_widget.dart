@@ -2,12 +2,8 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mentasia/features/data/provider/model_theme.dart';
 import 'package:mentasia/features/data/provider/profile_picture.dart';
-import 'package:mentasia/features/data/services/firestore.dart';
-import 'package:mentasia/features/data/services/storage.dart';
 import 'package:mentasia/features/presentation/drawer/screens/help_feedback_screen.dart';
 import 'package:mentasia/widgets/submit_card.dart';
 import 'package:path_provider/path_provider.dart';
