@@ -36,21 +36,11 @@ class _ConversationScreenState extends State<ConversationScreen> {
     // TODO: implement initState
     DialogFlowtter.fromFile().then((instance) => dialogFlowtter = instance);
     super.initState();
-  }
-
-  void scrollDown() {
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
+    Future.delayed(Duration(milliseconds: 500), () {
+      _scrollController.jumpTo(
         _scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeIn,
       );
-    }
-    // _scrollController.animateTo(
-    //   _scrollController.position.maxScrollExtent,
-    //   duration: Duration(milliseconds: 100),
-    //   curve: Curves.easeOut,
-    // );
+    });
   }
 
   List<Map<String, dynamic>> messages = [];
@@ -86,11 +76,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
               if (snapshot.connectionState == ConnectionState.active) {
                 if (snapshot.hasData) {
                   final data = snapshot.data!.docs;
-                  print(data.length);
                   return Flexible(
                     child: ListView.separated(
                       controller: _scrollController,
-                      physics: AlwaysScrollableScrollPhysics(),
+                      physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         final isUser = data[index]["isUserMessage"];
                         final userMessage = data[index]["message"];
@@ -171,7 +160,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
             onPressed: () {
               sendMessage(_controller.text);
               _controller.clear();
-              scrollDown();
+              FocusScope.of(context).unfocus();
             },
             messageController: _controller,
           ),
@@ -219,16 +208,19 @@ class _ConversationScreenState extends State<ConversationScreen> {
       'message': message.text?.text![0],
       'isUserMessage': isUserMessage,
     });
-    print("hello");
   }
 }
 
 class ActionBar extends StatelessWidget {
   final VoidCallback onPressed;
   final TextEditingController messageController;
+  final _focusNode = FocusNode();
 
-  const ActionBar(
-      {super.key, required this.onPressed, required this.messageController});
+  ActionBar({
+    super.key,
+    required this.onPressed,
+    required this.messageController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -258,6 +250,7 @@ class ActionBar extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(left: 16.0),
                 child: TextField(
+                  focusNode: _focusNode,
                   controller: messageController,
                   decoration: InputDecoration(
                     hintText: "Type something...",
