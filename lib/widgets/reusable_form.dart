@@ -4,17 +4,17 @@ import 'package:mentasia/features/core/config/global_variables.dart';
 class ReusableForm extends StatefulWidget {
   final String labelText;
   final TextEditingController controller;
-  final bool obscureText;
   final bool isPass;
+  final Widget? suffixIcon;
   String? Function(String?)? validator;
 
   ReusableForm({
     super.key,
     required this.labelText,
     required this.controller,
-    this.obscureText = false,
     this.validator,
     this.isPass = false,
+    this.suffixIcon,
   });
 
   @override
@@ -22,7 +22,7 @@ class ReusableForm extends StatefulWidget {
 }
 
 class _ReusableFormState extends State<ReusableForm> {
-  bool showPass = false;
+  bool showPass = true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,26 +38,9 @@ class _ReusableFormState extends State<ReusableForm> {
       child: TextFormField(
         validator: widget.validator,
         controller: widget.controller,
-        obscureText: showPass ? true : widget.obscureText,
+        obscureText: widget.isPass,
         decoration: InputDecoration(
-          suffixIcon: widget.isPass
-              ? InkWell(
-                  child: showPass
-                      ? Icon(
-                          Icons.remove_red_eye,
-                          color: Colors.white,
-                        )
-                      : Icon(
-                          Icons.remove_red_eye_outlined,
-                          color: Colors.black,
-                        ),
-                  onTap: () {
-                    setState(() {
-                      showPass = !showPass;
-                    });
-                  },
-                )
-              : SizedBox.shrink(),
+          suffixIcon: widget.suffixIcon,
           fillColor: tPrimaryColor,
           filled: true,
           hintText: widget.labelText,

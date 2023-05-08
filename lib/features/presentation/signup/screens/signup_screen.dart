@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mentasia/features/core/config/global_variables.dart';
 import 'package:mentasia/features/presentation/login/screens/login_screen.dart';
 import 'package:mentasia/features/presentation/chat/screens/conversation_screen.dart';
 import 'package:mentasia/widgets/reusable_form.dart';
@@ -20,9 +18,9 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
-  bool showPass = false;
+  bool showPass = true;
 
-  RegExp regExp = new RegExp(
+  RegExp regExp = RegExp(
     r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
     caseSensitive: false,
     multiLine: false,
@@ -69,7 +67,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   validator: validateEmail,
                   labelText: "Email",
                   controller: _emailController,
-                  obscureText: false,
                 ),
                 SizedBox(
                   height: 20,
@@ -78,7 +75,21 @@ class _SignupScreenState extends State<SignupScreen> {
                   validator: validatePassword,
                   labelText: "Password",
                   controller: _passwordController,
-                  isPass: true,
+                  isPass: showPass,
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showPass = !showPass;
+                      });
+                    },
+                    child: showPass
+                        ? Icon(
+                            Icons.remove_red_eye,
+                          )
+                        : Icon(
+                            Icons.remove_red_eye_outlined,
+                          ),
+                  ),
                 ),
                 SizedBox(
                   height: 20,

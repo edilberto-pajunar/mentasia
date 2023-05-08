@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  bool showPass = true;
 
   void loginUser() async {
     await Auth().loginUser(
@@ -62,7 +63,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 ReusableForm(
                   labelText: "Password",
                   controller: _passwordController,
-                  isPass: true,
+                  isPass: showPass,
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showPass = !showPass;
+                      });
+                    },
+                    child: showPass
+                        ? Icon(
+                            Icons.remove_red_eye,
+                          )
+                        : Icon(
+                            Icons.remove_red_eye_outlined,
+                          ),
+                  ),
                 ),
                 SizedBox(
                   height: 10,

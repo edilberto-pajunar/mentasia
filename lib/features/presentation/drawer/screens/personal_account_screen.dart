@@ -51,7 +51,6 @@ class _PersonalAccountScreenState extends State<PersonalAccountScreen> {
                         ReusableForm(
                           controller: _usernameController,
                           labelText: "Username:",
-                          obscureText: false,
                         ),
                         SizedBox(
                           height: 10,

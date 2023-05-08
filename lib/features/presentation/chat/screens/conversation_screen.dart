@@ -1,18 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mentasia/features/core/config/global_variables.dart';
 import 'package:mentasia/features/data/provider/model_theme.dart';
+import 'package:mentasia/features/data/services/firestore.dart';
+import 'package:mentasia/features/presentation/chat/widgets/date_label.dart';
 import 'package:mentasia/features/presentation/drawer/widgets/drawer_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-import '../widgets/message_widget.dart';
 
 class ConversationScreen extends StatefulWidget {
   static String route = "ConversationScreen";
 
-  ConversationScreen({
+  const ConversationScreen({
     super.key,
   });
 
@@ -26,23 +27,37 @@ class _ConversationScreenState extends State<ConversationScreen> {
   late DialogFlowtter dialogFlowtter;
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  IconData _iconLight = Icons.wb_sunny;
-  IconData _iconDark = Icons.nights_stay;
+  final IconData _iconLight = Icons.wb_sunny;
+  final IconData _iconDark = Icons.nights_stay;
+  final DateTime time = DateTime.now();
 
   @override
   void initState() {
     // TODO: implement initState
     DialogFlowtter.fromFile().then((instance) => dialogFlowtter = instance);
-
     super.initState();
   }
 
-  void response(query) async {}
+  void scrollDown() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeIn,
+      );
+    }
+    // _scrollController.animateTo(
+    //   _scrollController.position.maxScrollExtent,
+    //   duration: Duration(milliseconds: 100),
+    //   curve: Curves.easeOut,
+    // );
+  }
 
   List<Map<String, dynamic>> messages = [];
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -65,31 +80,98 @@ class _ConversationScreenState extends State<ConversationScreen> {
       ),
       body: Column(
         children: [
-          Flexible(
-            child: MessageWidget(
-              scrollController: _scrollController,
-              messages: messages,
-            ),
+          StreamBuilder(
+            stream: FirestoreService().readMessage(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                if (snapshot.hasData) {
+                  final data = snapshot.data!.docs;
+                  print(data.length);
+                  return Flexible(
+                    child: ListView.separated(
+                      controller: _scrollController,
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final isUser = data[index]["isUserMessage"];
+                        final userMessage = data[index]["message"];
+                        return Column(
+                          children: [
+                            // Text(
+                            //   "${data[index]["message"]}",
+                            // ),
+                            Row(
+                              mainAxisAlignment: isUser
+                                  ? MainAxisAlignment.end
+                                  : MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  constraints: BoxConstraints(
+                                    maxWidth: width * 2 / 3,
+                                  ),
+                                  margin: EdgeInsets.all(10),
+                                  padding: EdgeInsets.all(14),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                      bottomRight: Radius.circular(
+                                        isUser ? 0 : 20,
+                                      ),
+                                      topLeft: Radius.circular(isUser ? 20 : 0),
+                                    ),
+                                    color: isUser
+                                        ? tPrimaryColor
+                                        : tBlackColor.withOpacity(0.3),
+                                  ),
+                                  child: Text(
+                                    "$userMessage",
+                                    style: TextStyle(
+                                      color: tWhiteColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            DateLabel(
+                              label: DateFormat.yMd().format(time),
+                              alignment: isUser
+                                  ? Alignment.bottomRight
+                                  : Alignment.bottomLeft,
+                            ),
+                          ],
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(top: 5),
+                        );
+                      },
+                      itemCount: data.length,
+                    ),
+                  );
+                } else {
+                  return Flexible(
+                    child: Center(
+                      child: Text("Hi! Let us have a chat my friend"),
+                    ),
+                  );
+                }
+              } else {
+                return Flexible(
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: tPrimaryColor,
+                    ),
+                  ),
+                );
+              }
+            },
           ),
-          isLoading
-              ? SpinKitChasingDots(
-                  color: tPrimaryColor,
-                  size: 15,
-                )
-              : SizedBox.shrink(),
           ActionBar(
             onPressed: () {
               sendMessage(_controller.text);
               _controller.clear();
-              setState(() {
-                isLoading = false;
-              });
-
-              _scrollController.animateTo(
-                _scrollController.position.maxScrollExtent,
-                duration: Duration(milliseconds: 300),
-                curve: Curves.easeOut,
-              );
+              scrollDown();
             },
             messageController: _controller,
           ),
@@ -102,9 +184,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
     if (text.isEmpty) {
       print("Message is Empty");
     } else {
-      setState(() {
-        isLoading = true;
-      });
       setState(() {
         addMessage(
           Message(
@@ -132,10 +211,15 @@ class _ConversationScreenState extends State<ConversationScreen> {
   }
 
   addMessage(Message message, [bool isUserMessage = false]) {
+    FirestoreService().sendMessage(
+      message.text!.text![0],
+      isUserMessage,
+    );
     messages.add({
       'message': message.text?.text![0],
       'isUserMessage': isUserMessage,
     });
+    print("hello");
   }
 }
 
@@ -169,28 +253,26 @@ class ActionBar extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(left: 16.0),
-              child: TextField(
-                controller: messageController,
-                decoration: InputDecoration(
-                  hintText: "Type something...",
-                  border: InputBorder.none,
-                ),
-                style: TextStyle(
-                  fontSize: 14,
+          Consumer<ModelTheme>(
+            builder: (context, value, child) => Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: 16.0),
+                child: TextField(
+                  controller: messageController,
+                  decoration: InputDecoration(
+                    hintText: "Type something...",
+                    border: InputBorder.none,
+                  ),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: value.isDark ? Colors.white : Colors.black,
+                  ),
                 ),
               ),
             ),
           ),
           Padding(
             padding: EdgeInsets.only(left: 12.0, right: 24.0),
-            // child: GlowingActionButton(
-            //   color: Colors.greenAccent,
-            //   icon: Icons.send_rounded,
-            //   onPressed: onPressed,
-            // ),
             child: GestureDetector(
               onTap: onPressed,
               child: Container(

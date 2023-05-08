@@ -8,4 +8,9 @@ class User {
         "email": email,
         "password": password,
       };
+
+  static User fromJson(Map<String, dynamic> json) => User(
+        email: json["email"],
+        password: json["password"],
+      );
 }

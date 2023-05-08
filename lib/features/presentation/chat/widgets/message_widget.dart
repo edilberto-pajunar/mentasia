@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mentasia/features/core/config/global_variables.dart';
+import 'package:mentasia/features/data/services/firestore.dart';
 
 class MessageWidget extends StatefulWidget {
   final List messages;
   final ScrollController scrollController;
-
   const MessageWidget({
     super.key,
     required this.messages,
@@ -84,7 +84,7 @@ class _DateLabel extends StatelessWidget {
   final String label;
   final Alignment alignment;
 
-  const _DateLabel({super.key, required this.label, required this.alignment});
+  const _DateLabel({required this.label, required this.alignment});
 
   @override
   Widget build(BuildContext context) {

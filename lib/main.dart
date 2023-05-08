@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mentasia/features/core/config/global_variables.dart';
 import 'package:mentasia/features/data/provider/profile_picture.dart';
+import 'package:mentasia/features/presentation/splash/screens/splash_screen.dart';
 import 'package:mentasia/firebase_options.dart';
 import 'package:mentasia/features/data/provider/model_theme.dart';
 import 'package:mentasia/features/routes/router.dart';
-import 'package:mentasia/features/presentation/splash/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'features/core/themes/themes.dart';
