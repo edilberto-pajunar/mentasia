@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:mentasia/features/data/models/user.dart' as model;
 
 class Auth {
@@ -11,7 +10,7 @@ class Auth {
     UserCredential cred = await _auth.signInAnonymously();
 
     model.User user = model.User(
-      email: "guest" + cred.user!.uid,
+      email: "guest${cred.user!.uid}",
       password: "",
     );
 
@@ -36,7 +35,7 @@ class Auth {
           .collection("users")
           .doc(cred.user!.uid)
           .set(user.toJson());
-    } on FirebaseAuthException catch (e) {}
+    } on FirebaseAuthException {}
   }
 
   Future loginUser(String email, String password) async {
@@ -49,4 +48,6 @@ class Auth {
   Future logout() async {
     await _auth.signOut();
   }
+
+  
 }

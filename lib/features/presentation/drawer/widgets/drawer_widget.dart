@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mentasia/features/data/provider/model_theme.dart';
-import 'package:mentasia/features/data/provider/profile_picture.dart';
+import 'package:mentasia/features/data/provider/profile.dart';
 import 'package:mentasia/features/presentation/drawer/screens/help_feedback_screen.dart';
 import 'package:mentasia/widgets/submit_card.dart';
 import 'package:path_provider/path_provider.dart';
@@ -47,7 +47,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final profilePic = Provider.of<ProfilePicture>(context);
+    final profile = Provider.of<Profile>(context);
     return SingleChildScrollView(
       child: SafeArea(
         child: Padding(
@@ -59,17 +59,17 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ),
               ListTile(
                 leading: GestureDetector(
-                  onTap: () => profilePic.pickImage(),
-                  child: profilePic.image != null
-                      ? Image.file(profilePic.image!)
+                  onTap: () => profile.pickImage(),
+                  child: profile.image != null
+                      ? Image.file(profile.image!)
                       : CircleAvatar(
                           radius: 40,
                         ),
                 ),
                 title: Text(
                   isGuest
-                      ? "Guest${accountGuest}".substring(0, 11)
-                      : "${accountName}",
+                      ? "Guest$accountGuest".substring(0, 11)
+                      : accountName.toString(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,

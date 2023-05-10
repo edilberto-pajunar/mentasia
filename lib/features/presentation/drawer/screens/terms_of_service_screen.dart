@@ -30,7 +30,7 @@ class TermsOfServiceScreen extends StatelessWidget {
               CardWidget(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
                       "Description of Service",
                       style: TextStyle(
@@ -42,7 +42,7 @@ class TermsOfServiceScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "The Mental Health App is a mobile application that provides information and resources on mental health. The App is designed to be used as a tool to support individuals who are seeking mental health resources and support.",
+                      "The mentasia is a mobile application that provides information and resources on mental health. The App is designed to be used as a tool to support individuals who are seeking mental health resources and support.",
                     ),
                     SizedBox(
                       height: 10,
@@ -58,7 +58,7 @@ class TermsOfServiceScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "You agree to use the Mental Health App only for lawful purposes and in a manner that does not infringe the rights of, or restrict or inhibit the use and enjoyment of the App by any third party. You shall not engage in any conduct that is offensive, defamatory or otherwise objectionable when using the App.",
+                      "You agree to use the mentasia only for lawful purposes and in a manner that does not infringe the rights of, or restrict or inhibit the use and enjoyment of the App by any third party. You shall not engage in any conduct that is offensive, defamatory or otherwise objectionable when using the App.",
                     ),
                     SizedBox(
                       height: 10,
@@ -74,7 +74,7 @@ class TermsOfServiceScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "The information provided by the Mental Health App is for general informational purposes only and is not intended as a substitute for professional medical advice, diagnosis or treatment. The App is not a substitute for seeking professional medical advice or treatment from a qualified healthcare provider.",
+                      "The information provided by the mentasia is for general informational purposes only and is not intended as a substitute for professional medical advice, diagnosis or treatment. The App is not a substitute for seeking professional medical advice or treatment from a qualified healthcare provider.",
                     ),
                     SizedBox(
                       height: 10,
@@ -90,7 +90,7 @@ class TermsOfServiceScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "The Mental Health App and its owners, employees, agents, affiliates, partners or licensors shall not be liable for any direct, indirect, incidental, special or consequential damages resulting from the use of the App or the inability to use the App, or for any errors or omissions in the content of the App.",
+                      "The mentasia and its owners, employees, agents, affiliates, partners or licensors shall not be liable for any direct, indirect, incidental, special or consequential damages resulting from the use of the App or the inability to use the App, or for any errors or omissions in the content of the App.",
                     ),
                     SizedBox(
                       height: 10,
@@ -106,7 +106,7 @@ class TermsOfServiceScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "All intellectual property rights related to the Mental Health App, including but not limited to copyrights, trademarks, and patents, are owned by the owners of the App or their licensors. You agree not to use the App or any of its contents for any commercial purpose without the express written consent of the owners of the App.",
+                      "All intellectual property rights related to the mentasia, including but not limited to copyrights, trademarks, and patents, are owned by the owners of the App or their licensors. You agree not to use the App or any of its contents for any commercial purpose without the express written consent of the owners of the App.",
                     ),
                     SizedBox(
                       height: 10,
@@ -122,7 +122,7 @@ class TermsOfServiceScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "The owners of the Mental Health App may terminate your access to the App at any time and for any reason without notice..",
+                      "The owners of the mentasia may terminate your access to the App at any time and for any reason without notice..",
                     ),
                     SizedBox(
                       height: 10,
@@ -138,13 +138,13 @@ class TermsOfServiceScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "These Terms and Conditions shall be governed by and construed in accordance with the laws of the jurisdiction in which the owners of the Mental Health App are located.",
+                      "These Terms and Conditions shall be governed by and construed in accordance with the laws of the jurisdiction in which the owners of the mentasia are located.",
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     Text(
-                      "By using the Mental Health App, you acknowledge that you have read and agree to be bound by these Terms and Conditions. If you do not agree to these Terms and Conditions, you may not use the App.",
+                      "By using the mentasia, you acknowledge that you have read and agree to be bound by these Terms and Conditions. If you do not agree to these Terms and Conditions, you may not use the App.",
                     ),
                   ],
                 ),

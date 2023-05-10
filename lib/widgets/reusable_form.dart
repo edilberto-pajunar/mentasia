@@ -6,6 +6,7 @@ class ReusableForm extends StatefulWidget {
   final TextEditingController controller;
   final bool isPass;
   final Widget? suffixIcon;
+  final int? maxLines;
   String? Function(String?)? validator;
 
   ReusableForm({
@@ -15,6 +16,7 @@ class ReusableForm extends StatefulWidget {
     this.validator,
     this.isPass = false,
     this.suffixIcon,
+    this.maxLines,
   });
 
   @override
@@ -36,6 +38,7 @@ class _ReusableFormState extends State<ReusableForm> {
         ],
       ),
       child: TextFormField(
+        maxLines: widget.maxLines ?? 1,
         validator: widget.validator,
         controller: widget.controller,
         obscureText: widget.isPass,

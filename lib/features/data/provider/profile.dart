@@ -8,11 +8,16 @@ import 'package:path/path.dart';
 
 import '../services/firestore.dart';
 
-class ProfilePicture extends ChangeNotifier {
-  late var _imageFile;
+class Profile extends ChangeNotifier {
+  late dynamic _imageFile;
   File? _image;
+  // change name
+  final String _name = "";
+  get name => _name;
 
   File? get image => _image;
+
+  // change image
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(
@@ -39,5 +44,9 @@ class ProfilePicture extends ChangeNotifier {
     final image = File("${directory.path}/$name");
 
     return File(imagePath).copy(image.path);
+  }
+
+  void updateName() {
+    notifyListeners();
   }
 }

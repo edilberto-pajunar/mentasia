@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mentasia/features/data/models/message_data.dart';
 import 'package:mentasia/features/data/services/storage.dart';
-import 'package:uuid/uuid.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -43,7 +42,6 @@ class FirestoreService {
     try {
       MessageData messageData =
           MessageData(message: message, isUserMessage: isUserMessage);
-      Uuid uuid = Uuid();
       await _firebaseFirestore
           .collection("users")
           .doc(_auth.currentUser!.uid)
@@ -69,37 +67,23 @@ class FirestoreService {
     return documentSnapshot;
   }
 
-  Future<QuerySnapshot> getMessage() async {
-    final snapshot = await _firebaseFirestore
+  Future updateName(String name) async {
+    await _firebaseFirestore
         .collection("users")
         .doc(_auth.currentUser!.uid)
-        .collection("msg")
-        .get();
-
-    // final userMessage = snapshot.docs
-    //     .map((e) => MessageData.fromJson(e as Map<String, dynamic>))
-    //     .toList();
-    return snapshot;
+        .set(
+            {
+          "name": name,
+        },
+            SetOptions(
+              merge: true,
+            ));
   }
 
-  final List _message = [];
-  List get message => _message;
-
-  Future<List> fetchDocument() async {
-    QuerySnapshot querySnapshot = await _firebaseFirestore
+  Future<dynamic> getProfile() async {
+    final snapshot = _firebaseFirestore
         .collection("users")
         .doc(_auth.currentUser!.uid)
-        .collection("msg")
         .get();
-
-    for (var doc in querySnapshot.docs) {
-      _message.add(doc.data());
-      print(_message);
-    }
-    return message;
-
-    // for (var doc in querySnapshot.docs) {
-    //   print(doc.data());
-    // }
   }
 }

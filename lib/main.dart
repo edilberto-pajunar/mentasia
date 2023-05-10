@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mentasia/features/data/provider/profile_picture.dart';
+import 'package:mentasia/features/data/provider/profile.dart';
 import 'package:mentasia/features/presentation/splash/screens/splash_screen.dart';
 import 'package:mentasia/firebase_options.dart';
 import 'package:mentasia/features/data/provider/model_theme.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           create: (context) => ModelTheme(),
         ),
         ChangeNotifierProvider(
-          create: (context) => ProfilePicture(),
+          create: (context) => Profile(),
         ),
       ],
       child: Consumer<ModelTheme>(

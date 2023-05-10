@@ -1,7 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mentasia/features/core/config/global_variables.dart';
 import 'package:mentasia/features/presentation/chat/screens/conversation_screen.dart';
 import 'package:mentasia/features/presentation/login/screens/login_screen.dart';
@@ -63,6 +60,7 @@ class HelloScreen extends StatelessWidget {
                 // Body
                 Center(
                   child: Text(
+                    textAlign: TextAlign.center,
                     "Welcome to Mentasia",
                     style: TextStyle(
                       fontSize: 35,
