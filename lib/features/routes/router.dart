@@ -1,15 +1,16 @@
 import 'package:mentasia/features/presentation/chat/screens/conversation_screen.dart';
-import 'package:mentasia/features/presentation/login/screens/login_screen.dart';
-import 'package:mentasia/features/presentation/signup/screens/signup_screen.dart';
-import 'package:mentasia/features/presentation/drawer/screens/personal_account_screen.dart';
-import 'package:mentasia/features/presentation/drawer/screens/terms_of_service_screen.dart';
-import 'package:mentasia/features/presentation/drawer/screens/about_us_screen.dart';
-import 'package:mentasia/features/presentation/drawer/screens/help_feedback_screen.dart';
-import 'package:mentasia/features/presentation/drawer/screens/mentasia_works_screen.dart';
-import 'package:mentasia/features/presentation/splash/screens/hello_screen.dart';
-import 'package:mentasia/features/presentation/splash/screens/splash_screen.dart';
+import 'package:mentasia/features/presentation/drawer/screens/articles.dart';
+import 'package:mentasia/features/presentation/auth/login/screens/login.dart';
+import 'package:mentasia/features/presentation/auth/signup/screens/signup.dart';
+import 'package:mentasia/features/presentation/drawer/screens/personal_account.dart';
+import 'package:mentasia/features/presentation/drawer/screens/tos.dart';
+import 'package:mentasia/features/presentation/drawer/screens/about_us.dart';
+import 'package:mentasia/features/presentation/drawer/screens/feedback.dart';
+import 'package:mentasia/features/presentation/drawer/screens/mentasia_work.dart';
+import 'package:mentasia/features/presentation/splash/screens/hello.dart';
+import 'package:mentasia/features/presentation/splash/screens/splash.dart';
 
-import '../presentation/splash/screens/wrapper.dart';
+import '../presentation/auth/wrapper.dart';
 
 getRoutes() {
   return {
@@ -24,5 +25,6 @@ getRoutes() {
     HelpFeedbackScreen.route: (context) => HelpFeedbackScreen(),
     TermsOfServiceScreen.route: (context) => TermsOfServiceScreen(),
     ConversationScreen.route: (context) => ConversationScreen(),
+    Articles.route: (context) => Articles(),
   };
 }

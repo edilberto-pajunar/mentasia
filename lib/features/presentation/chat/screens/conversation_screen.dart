@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mentasia/features/core/config/global_variables.dart';
 import 'package:mentasia/features/data/provider/model_theme.dart';
 import 'package:mentasia/features/data/services/firestore.dart';
-import 'package:mentasia/features/presentation/chat/widgets/date_label.dart';
-import 'package:mentasia/features/presentation/drawer/widgets/drawer_widget.dart';
+import 'package:mentasia/widgets/chat/date_label.dart';
+import 'package:mentasia/widgets/drawer/drawer.dart';
 import 'package:provider/provider.dart';
 
 class ConversationScreen extends StatefulWidget {
@@ -33,7 +34,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     DialogFlowtter.fromFile().then((instance) => dialogFlowtter = instance);
     super.initState();
     Future.delayed(Duration(milliseconds: 500), () {
@@ -89,9 +89,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                             //   "${data[index]["message"]}",
                             // ),
                             Row(
-                              mainAxisAlignment: isUser
-                                  ? MainAxisAlignment.end
-                                  : MainAxisAlignment.start,
+                              mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
                               children: [
                                 Container(
                                   constraints: BoxConstraints(
@@ -108,9 +106,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                       ),
                                       topLeft: Radius.circular(isUser ? 20 : 0),
                                     ),
-                                    color: isUser
-                                        ? tPrimaryColor
-                                        : tBlackColor.withOpacity(0.3),
+                                    color: isUser ? tPrimaryColor : tBlackColor.withOpacity(0.3),
                                   ),
                                   child: Text(
                                     "$userMessage",
@@ -123,9 +119,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                             ),
                             DateLabel(
                               label: DateFormat.yMd().format(time),
-                              alignment: isUser
-                                  ? Alignment.bottomRight
-                                  : Alignment.bottomLeft,
+                              alignment: isUser ? Alignment.bottomRight : Alignment.bottomLeft,
                             ),
                           ],
                         );
@@ -171,7 +165,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
   sendMessage(String text) async {
     if (text.isEmpty) {
-      print("Message is Empty");
+      if (kDebugMode) {
+        print("Message is Empty");
+      }
     } else {
       setState(() {
         addMessage(

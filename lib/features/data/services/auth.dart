@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mentasia/features/data/models/user.dart' as model;
 
 class Auth {
@@ -31,15 +32,16 @@ class Auth {
         password: password,
       );
 
-      await _firestore
-          .collection("users")
-          .doc(cred.user!.uid)
-          .set(user.toJson());
-    } on FirebaseAuthException {}
+      await _firestore.collection("users").doc(cred.user!.uid).set(user.toJson());
+    } on FirebaseAuthException {
+      if (kDebugMode) {
+        print("Error");
+      }
+    }
   }
 
   Future loginUser(String email, String password) async {
-    final cred = await _auth.signInWithEmailAndPassword(
+    await _auth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
@@ -48,6 +50,4 @@ class Auth {
   Future logout() async {
     await _auth.signOut();
   }
-
-  
 }

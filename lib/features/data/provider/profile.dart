@@ -1,15 +1,13 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 
-import '../services/firestore.dart';
-
 class Profile extends ChangeNotifier {
-  late dynamic _imageFile;
   File? _image;
   // change name
   final String _name = "";
@@ -18,7 +16,7 @@ class Profile extends ChangeNotifier {
   File? get image => _image;
 
   // change image
-  Future pickImage() async {
+  Future<void> pickImage() async {
     try {
       final image = await ImagePicker().pickImage(
         source: ImageSource.gallery,
@@ -28,12 +26,10 @@ class Profile extends ChangeNotifier {
       // final imageTemporary = File(image.path);
       final imagePermanent = await saveImagePermanently(image.path);
       _image = imagePermanent;
-
-      final finalImage = await image.readAsBytes();
-
-      _imageFile = FirestoreService().uploadProfilePic(finalImage);
     } on PlatformException catch (e) {
-      print("Faild to pick image: $e");
+      if (kDebugMode) {
+        print("Faild to pick image: $e");
+      }
     }
     notifyListeners();
   }
