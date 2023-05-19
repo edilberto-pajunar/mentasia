@@ -7,11 +7,8 @@ import 'package:path_provider/path_provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 
-class Profile extends ChangeNotifier {
+class ProfileServices extends ChangeNotifier {
   File? _image;
-  // change name
-  final String _name = "";
-  get name => _name;
 
   File? get image => _image;
 

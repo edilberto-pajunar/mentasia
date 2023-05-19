@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mentasia/features/presentation/chat/screens/conversation_screen.dart';
-import 'package:mentasia/features/presentation/splash/screens/hello.dart';
+import 'package:mentasia/features/views/chat/conversation.dart';
+import 'package:mentasia/features/views/splash/hello.dart';
 
 
 class Wrapper extends StatelessWidget {

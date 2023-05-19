@@ -52,15 +52,17 @@ class FirestoreService {
 
   Future updateName(String name) async {
     await _firebaseFirestore.collection("users").doc(_auth.currentUser!.uid).set(
-        {
-          "name": name,
-        },
-        SetOptions(
-          merge: true,
-        ));
+      {
+        "name": name,
+      },
+      SetOptions(
+        merge: true,
+      ),
+    );
   }
 
-  Future<void> getProfile() async {
-    await _firebaseFirestore.collection("users").doc(_auth.currentUser!.uid).get();
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getProfile() {
+    final snapshot = _firebaseFirestore.collection("users").doc(_auth.currentUser!.uid).snapshots();
+    return snapshot;
   }
 }

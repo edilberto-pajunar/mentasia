@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mentasia/features/core/themes/themes.dart';
 import 'package:mentasia/features/data/provider/profile.dart';
 import 'package:mentasia/features/data/services/article.dart';
-import 'package:mentasia/features/presentation/splash/screens/splash.dart';
+import 'package:mentasia/features/views/splash/splash.dart';
 import 'package:mentasia/firebase_options.dart';
 import 'package:mentasia/features/data/provider/model_theme.dart';
 import 'package:mentasia/features/routes/router.dart';
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ModelTheme()),
-        ChangeNotifierProvider(create: (context) => Profile()),
+        ChangeNotifierProvider(create: (context) => ProfileServices()),
         ChangeNotifierProvider(create: (context) => ArticleServices()),
       ],
       child: Consumer<ModelTheme>(

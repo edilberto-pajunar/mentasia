@@ -1,16 +1,16 @@
-import 'package:mentasia/features/presentation/chat/screens/conversation_screen.dart';
-import 'package:mentasia/features/presentation/drawer/screens/articles.dart';
-import 'package:mentasia/features/presentation/auth/login/screens/login.dart';
-import 'package:mentasia/features/presentation/auth/signup/screens/signup.dart';
-import 'package:mentasia/features/presentation/drawer/screens/personal_account.dart';
-import 'package:mentasia/features/presentation/drawer/screens/tos.dart';
-import 'package:mentasia/features/presentation/drawer/screens/about_us.dart';
-import 'package:mentasia/features/presentation/drawer/screens/feedback.dart';
-import 'package:mentasia/features/presentation/drawer/screens/mentasia_work.dart';
-import 'package:mentasia/features/presentation/splash/screens/hello.dart';
-import 'package:mentasia/features/presentation/splash/screens/splash.dart';
+import 'package:mentasia/features/views/chat/conversation.dart';
+import 'package:mentasia/features/views/drawer/about_us.dart';
+import 'package:mentasia/features/views/drawer/articles.dart';
+import 'package:mentasia/features/views/drawer/feedback.dart';
+import 'package:mentasia/features/views/drawer/mentasia_work.dart';
+import 'package:mentasia/features/views/drawer/personal_account.dart';
+import 'package:mentasia/features/views/auth/login/login.dart';
+import 'package:mentasia/features/views/auth/signup/signup.dart';
+import 'package:mentasia/features/views/drawer/tos.dart';
+import 'package:mentasia/features/views/splash/hello.dart';
+import 'package:mentasia/features/views/splash/splash.dart';
 
-import '../presentation/auth/wrapper.dart';
+import '../views/auth/wrapper.dart';
 
 getRoutes() {
   return {

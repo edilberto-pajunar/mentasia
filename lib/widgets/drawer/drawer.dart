@@ -3,17 +3,18 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mentasia/features/core/config/global_variables.dart';
-import 'package:mentasia/features/data/provider/model_theme.dart';
 import 'package:mentasia/features/data/provider/profile.dart';
 import 'package:mentasia/features/data/services/article.dart';
 import 'package:mentasia/features/data/services/auth.dart';
-import 'package:mentasia/features/presentation/drawer/screens/about_us.dart';
-import 'package:mentasia/features/presentation/drawer/screens/articles.dart';
-import 'package:mentasia/features/presentation/drawer/screens/feedback.dart';
-import 'package:mentasia/features/presentation/drawer/screens/mentasia_work.dart';
-import 'package:mentasia/features/presentation/drawer/screens/personal_account.dart';
-import 'package:mentasia/features/presentation/drawer/screens/tos.dart';
-import 'package:mentasia/features/presentation/splash/screens/hello.dart';
+import 'package:mentasia/features/data/services/firestore.dart';
+import 'package:mentasia/features/views/drawer/about_us.dart';
+import 'package:mentasia/features/views/drawer/articles.dart';
+import 'package:mentasia/features/views/drawer/feedback.dart';
+import 'package:mentasia/features/views/drawer/mentasia_work.dart';
+import 'package:mentasia/features/views/drawer/personal_account.dart';
+import 'package:mentasia/features/views/drawer/tos.dart';
+import 'package:mentasia/features/views/splash/hello.dart';
+import 'package:mentasia/widgets/buttons/settings.dart';
 import 'package:mentasia/widgets/cards/submit.dart';
 import 'package:path_provider/path_provider.dart';
 // ignore: depend_on_referenced_packages
@@ -32,9 +33,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   final String? accountGuest = FirebaseAuth.instance.currentUser!.uid;
   final String? accountName = FirebaseAuth.instance.currentUser!.email;
   File? image;
+  bool isLoading = false;
 
   void logout(context) async {
-    await Auth().logout();
+    await AuthServices().logout();
 
     Navigator.pushNamed(context, HelloScreen.route);
   }
@@ -49,7 +51,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final profile = Provider.of<Profile>(context);
+    final ProfileServices profileServices = Provider.of<ProfileServices>(context);
+
     return SingleChildScrollView(
       child: SafeArea(
         child: Padding(
@@ -59,23 +62,31 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               SizedBox(
                 height: 20,
               ),
-              ListTile(
-                leading: GestureDetector(
-                  onTap: () => profile.pickImage(),
-                  child: profile.image != null
-                      ? Image.file(profile.image!)
-                      : CircleAvatar(
-                          radius: 40,
+              StreamBuilder(
+                stream: FirestoreService().getProfile(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListTile(
+                      leading: GestureDetector(
+                        onTap: () => profileServices.pickImage(),
+                        child: profileServices.image != null
+                            ? Image.file(profileServices.image!)
+                            : CircleAvatar(
+                                radius: 40,
+                              ),
+                      ),
+                      title: Text(
+                        "${snapshot.data!["name"]}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
-                ),
-                title: Text(
-                  isGuest ? "Guest$accountGuest".substring(0, 11) : accountName.toString(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                subtitle: Text("Profile"),
+                      ),
+                      subtitle: Text("Profile"),
+                    );
+                  }
+                  return Text("Error loading data!");
+                },
               ),
               Padding(
                 padding: const EdgeInsets.all(25.0),
@@ -117,7 +128,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Navigator.pushNamed(context, Articles.route);
                     } else {
                       await value.fetchArticleApi();
-                      if (context.mounted) return;
+                      // ignore: use_build_context_synchronously
                       Navigator.pushNamed(context, Articles.route);
                     }
                   },
@@ -139,58 +150,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class SettingsButton extends StatelessWidget {
-  final String textLabel;
-  final String imageString;
-  final VoidCallback onTap;
-
-  const SettingsButton({
-    super.key,
-    required this.textLabel,
-    required this.imageString,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final darkTheme = Provider.of<ModelTheme>(context).isDark;
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: darkTheme ? Colors.grey : tSecondaryColor,
-          boxShadow: const [
-            BoxShadow(
-              color: tBlackColor,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: Image(
-                image: AssetImage(imageString),
-                width: 20,
-              ),
-            ),
-            Text(
-              textLabel,
-              style: TextStyle(
-                color: darkTheme ? Colors.white : Colors.black,
-                fontSize: 13,
-              ),
-            ),
-          ],
         ),
       ),
     );

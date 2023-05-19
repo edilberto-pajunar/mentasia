@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:mentasia/features/core/config/global_variables.dart';
 import 'package:mentasia/features/data/services/auth.dart';
-import 'package:mentasia/features/presentation/chat/screens/conversation_screen.dart';
-import 'package:mentasia/features/presentation/auth/login/screens/login.dart';
+import 'package:mentasia/features/views/chat/conversation.dart';
+import 'package:mentasia/features/views/auth/login/login.dart';
 import 'package:mentasia/widgets/cards/submit.dart';
 
-class HelloScreen extends StatelessWidget {
+class HelloScreen extends StatefulWidget {
   static String route = "HelloScreen";
 
   const HelloScreen({super.key});
 
+  @override
+  State<HelloScreen> createState() => _HelloScreenState();
+}
+
+class _HelloScreenState extends State<HelloScreen> {
+  bool isLoading = false;
+
   void signinGuest(context) async {
-    await Auth().signInAnonymously();
+    setState(() {
+      isLoading = true;
+    });
+    await AuthServices().signInAnonymously();
+
+    setState(() {
+      isLoading = false;
+    });
 
     Navigator.pushNamed(context, ConversationScreen.route);
   }
@@ -98,13 +112,15 @@ class HelloScreen extends StatelessWidget {
                 ),
 
                 // Chat now
-                Center(
-                  child: SubmitCard(
-                    buttonText: "CHAT NOW",
-                    onTap: () => signinGuest(context),
-                    colorButton: tPrimaryColor,
-                  ),
-                ),
+                isLoading
+                    ? Center(child: CircularProgressIndicator())
+                    : Center(
+                        child: SubmitCard(
+                          buttonText: "CHAT NOW",
+                          onTap: () => signinGuest(context),
+                          colorButton: tPrimaryColor,
+                        ),
+                      ),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -114,7 +130,12 @@ class HelloScreen extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () => Navigator.pushNamed(context, LoginScreen.route),
-                      child: Text("Login"),
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                          color: Colors.blue,
+                        ),
+                      ),
                     ),
                   ],
                 ),

@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:mentasia/features/core/config/global_variables.dart';
 import 'package:mentasia/features/data/provider/model_theme.dart';
 import 'package:mentasia/features/data/services/firestore.dart';
+import 'package:mentasia/widgets/buttons/action.dart';
 import 'package:mentasia/widgets/chat/date_label.dart';
 import 'package:mentasia/widgets/drawer/drawer.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +37,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
   void initState() {
     DialogFlowtter.fromFile().then((instance) => dialogFlowtter = instance);
     super.initState();
-    Future.delayed(Duration(milliseconds: 500), () {
+  }
+
+  void goBottom() {
+    SchedulerBinding.instance.addPersistentFrameCallback((timeStamp) {
       _scrollController.jumpTo(
         _scrollController.position.maxScrollExtent,
       );
@@ -78,8 +82,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   final data = snapshot.data!.docs;
                   return Flexible(
                     child: ListView.separated(
+                      shrinkWrap: true,
                       controller: _scrollController,
                       physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) {
                         final isUser = data[index]["isUserMessage"];
                         final userMessage = data[index]["message"];
@@ -155,6 +161,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
               sendMessage(_controller.text);
               _controller.clear();
               FocusScope.of(context).unfocus();
+              goBottom();
             },
             messageController: _controller,
           ),
@@ -204,76 +211,5 @@ class _ConversationScreenState extends State<ConversationScreen> {
       'message': message.text?.text![0],
       'isUserMessage': isUserMessage,
     });
-  }
-}
-
-class ActionBar extends StatelessWidget {
-  final VoidCallback onPressed;
-  final TextEditingController messageController;
-  final _focusNode = FocusNode();
-
-  ActionBar({
-    super.key,
-    required this.onPressed,
-    required this.messageController,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: true,
-      top: false,
-      child: Row(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              border: Border(
-                right: BorderSide(
-                  width: 2,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Icon(
-                CupertinoIcons.add_circled_solid,
-              ),
-            ),
-          ),
-          Consumer<ModelTheme>(
-            builder: (context, value, child) => Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: 16.0),
-                child: TextField(
-                  focusNode: _focusNode,
-                  controller: messageController,
-                  decoration: InputDecoration(
-                    hintText: "Type something...",
-                    border: InputBorder.none,
-                  ),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: value.isDark ? Colors.white : Colors.black,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 12.0, right: 24.0),
-            child: GestureDetector(
-              onTap: onPressed,
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(Icons.send),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
